@@ -9,7 +9,12 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from 'src/generated/prisma/client';
-
+export class UpdateProductDto {
+  name?: string;
+  sku?: string;
+  price?: number;
+  stock_quantity?: number;
+}
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -36,7 +41,7 @@ export class ProductController {
   @Patch('update/:id')
   async editProduct(
     @Param('id') id: string,
-    @Body() body: any,
+    @Body() body: UpdateProductDto,
   ): Promise<Product> {
     return this.productService.updateProduct(Number(id), body);
   }
